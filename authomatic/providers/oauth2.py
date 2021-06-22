@@ -858,7 +858,11 @@ class Facebook(OAuth2):
         
         # Facebook returns "expires" instead of "expires_in".
         credentials.expire_in = data.get('expires')
-        
+
+        if data.get('token_type') == 'bearer':
+            # TODO: cls is not available here, hardcode for now.
+            credentials.token_type = 'Bearer'
+
         return credentials
     
     
