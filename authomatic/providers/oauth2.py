@@ -1570,7 +1570,7 @@ class VK(OAuth2):
     
     user_authorization_url = 'http://api.vkontakte.ru/oauth/authorize'
     access_token_url = 'https://api.vkontakte.ru/oauth/access_token'
-    user_info_url = 'https://api.vk.com/method/getProfiles?' + \
+    user_info_url = 'https://api.vk.com/method/getProfiles?v=5.131&' + \
                     'fields=uid,first_name,last_name,nickname,sex,bdate,city,country,timezone,photo_big'
 
     supported_user_attributes = core.SupportedUserAttributes(
@@ -1606,7 +1606,7 @@ class VK(OAuth2):
                 user.birth_date = datetime.datetime.strptime(_birth_date, '%d.%m.%Y')
             except:
                 pass
-        user.id = _resp.get('uid')
+        user.id = _resp.get('id')
         user.first_name = _resp.get('first_name')
         user.gender = _resp.get('sex')
         user.last_name = _resp.get('last_name')
