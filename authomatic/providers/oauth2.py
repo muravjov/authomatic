@@ -1274,7 +1274,7 @@ class LinkedIn(OAuth2):
     # https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/migration-faq
     user_info_url = 'https://api.linkedin.com/v2/me'
 
-    user_info_scope = ['r_emailaddress']
+    user_info_scope = ['r_emailaddress', 'r_liteprofile']
 
     token_request_method = 'GET'  # To avoid a bug with OAuth2.0 on Linkedin
     # http://developer.linkedin.com/forum/unauthorized-invalid-or-expired-token-immediately-after-receiving-oauth2-token
