@@ -1305,6 +1305,11 @@ class LinkedIn(OAuth2):
 
         return request_elements
 
+    @classmethod
+    def _x_credentials_parser(cls, credentials, data):
+        credentials.token_type = cls.BEARER
+        return credentials
+
     def _x_user_parser(self, user, data):
 
         user.first_name = data.get('localizedFirstName')
