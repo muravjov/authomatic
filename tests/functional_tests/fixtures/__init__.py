@@ -92,7 +92,7 @@ def render_login_result(framework_name, result):
 
         template = env.get_template('login.html')
         return template.render(result=result,
-                               providers=ASSEMBLED_CONFIG.values(),
+                               providers=list(ASSEMBLED_CONFIG.values()),
                                oauth2_providers=OAUTH2_PROVIDERS,
                                oauth1_providers=OAUTH1_PROVIDERS,
                                openid_providers=OPENID_PROVIDERS,

@@ -10,12 +10,10 @@ If you want to implement framework specific extras, use these abstract classes a
 import abc
 
 
-class BaseSession(object):
+class BaseSession(object, metaclass=abc.ABCMeta):
     """
     Abstract class for custom session implementations.
     """
-    
-    __metaclass__ = abc.ABCMeta
     
     
     @abc.abstractmethod
@@ -55,12 +53,10 @@ class BaseSession(object):
         """
 
 
-class BaseConfig(object):
+class BaseConfig(object, metaclass=abc.ABCMeta):
     """
     Abstract class for :doc:`config` implementations.
     """
-    
-    __metaclass__ = abc.ABCMeta
     
     @abc.abstractmethod
     def get(self, key):

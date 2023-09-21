@@ -15,14 +15,14 @@ authomatic = Authomatic(config=CONFIG, # Here goes the config.
                         logging_level=logging.DEBUG)
 
 def links(handler):
-    for p in CONFIG.keys():
+    for p in list(CONFIG.keys()):
         handler.response.write('<a href="login/{p}">{p}</a><br />'.format(p=p))
     handler.response.write('<br /><br />')
 
 
 def loop(handler, obj):
     handler.response.write('<table>')
-    for k, v in obj.__dict__.items():
+    for k, v in list(obj.__dict__.items()):
         if not k in ('data', 'gae_user', 'credentials', 'content', 'config'):
             style = 'color: red' if not v else ''
             handler.response.write('<tr style="{}"><td>{}:</td><td>{}</td></tr>'.format(style, k, v))

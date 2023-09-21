@@ -89,7 +89,7 @@ def login_decorator(func):
             if provider.settings.report_errors:
                 error = e
                 if not isinstance(error, CancellationError):
-                    provider._log(logging.ERROR, u'Reported suppressed exception: {0}!'.format(repr(error)), exc_info=1)
+                    provider._log(logging.ERROR, 'Reported suppressed exception: {0}!'.format(repr(error)), exc_info=1)
             else:
                 if provider.settings.debug:
                     # TODO: Check whether it actually works without middleware
@@ -106,7 +106,7 @@ def login_decorator(func):
             if isinstance(provider.session, authomatic.core.Session):
                 provider.session.delete()
 
-            provider._log(logging.INFO, u'Procedure finished.')
+            provider._log(logging.INFO, 'Procedure finished.')
 
             if provider.callback:
                 provider.callback(result)
@@ -118,7 +118,7 @@ def login_decorator(func):
     return wrap
 
 
-class BaseProvider(object):
+class BaseProvider(object, metaclass=abc.ABCMeta):
     """
     Abstract base class for all providers.
     """
@@ -126,8 +126,6 @@ class BaseProvider(object):
     PROVIDER_TYPE_ID = 0
 
     _repr_ignore = ('user',)
-
-    __metaclass__ = abc.ABCMeta
 
     supported_user_attributes = authomatic.core.SupportedUserAttributes()
 
@@ -377,12 +375,12 @@ class BaseProvider(object):
                 headers.update({'Content-Type': 'application/x-www-form-urlencoded'})
         request_path = parse.urlunsplit(('', '', path or '', query or '', ''))
 
-        self._log(logging.DEBUG, u' \u251C\u2500 host: {0}'.format(host))
-        self._log(logging.DEBUG, u' \u251C\u2500 path: {0}'.format(request_path))
-        self._log(logging.DEBUG, u' \u251C\u2500 method: {0}'.format(method))
-        self._log(logging.DEBUG, u' \u251C\u2500 body: {0}'.format(body))
-        self._log(logging.DEBUG, u' \u251C\u2500 params: {0}'.format(params))
-        self._log(logging.DEBUG, u' \u2514\u2500 headers: {0}'.format(headers))
+        self._log(logging.DEBUG, ' \u251C\u2500 host: {0}'.format(host))
+        self._log(logging.DEBUG, ' \u251C\u2500 path: {0}'.format(request_path))
+        self._log(logging.DEBUG, ' \u251C\u2500 method: {0}'.format(method))
+        self._log(logging.DEBUG, ' \u251C\u2500 body: {0}'.format(body))
+        self._log(logging.DEBUG, ' \u251C\u2500 params: {0}'.format(params))
+        self._log(logging.DEBUG, ' \u2514\u2500 headers: {0}'.format(headers))
 
         http_proxy = os.environ.get("HTTP_PROXY")
         if http_proxy:
@@ -405,7 +403,7 @@ class BaseProvider(object):
             response.status = response.status_code
 
             def getheaders():
-                return response.headers.items()
+                return list(response.headers.items())
             response.getheaders = getheaders
 
             response.msg = None # response.headers
@@ -443,8 +441,8 @@ class BaseProvider(object):
             elif max_redirects > 0:
                 remaining_redirects = max_redirects - 1
 
-                self._log(logging.DEBUG, u'Redirecting to {0}'.format(url))
-                self._log(logging.DEBUG, u'Remaining redirects: {0}'
+                self._log(logging.DEBUG, 'Redirecting to {0}'.format(url))
+                self._log(logging.DEBUG, 'Remaining redirects: {0}'
                           .format(remaining_redirects))
 
                 # Call this method again.
@@ -459,10 +457,10 @@ class BaseProvider(object):
                                  url=location,
                                  status=response.status)
         else:
-            self._log(logging.DEBUG, u'Got response:')
-            self._log(logging.DEBUG, u' \u251C\u2500 url: {0}'.format(url))
-            self._log(logging.DEBUG, u' \u251C\u2500 status: {0}'.format(response.status))
-            self._log(logging.DEBUG, u' \u2514\u2500 headers: {0}'.format(response.getheaders()))
+            self._log(logging.DEBUG, 'Got response:')
+            self._log(logging.DEBUG, ' \u251C\u2500 url: {0}'.format(url))
+            self._log(logging.DEBUG, ' \u251C\u2500 status: {0}'.format(response.status))
+            self._log(logging.DEBUG, ' \u2514\u2500 headers: {0}'.format(response.getheaders()))
 
         return authomatic.core.Response(response, content_parser)
 
@@ -779,11 +777,11 @@ class AuthorizationProvider(BaseProvider):
         """
 
         if not self.user and not self.credentials:
-            raise CredentialsError(u'There is no authenticated user!')
+            raise CredentialsError('There is no authenticated user!')
 
         headers = headers or {}
 
-        self._log(logging.INFO, u'Accessing protected resource {0}.'.format(url))
+        self._log(logging.INFO, 'Accessing protected resource {0}.'.format(url))
 
         request_elements = self.create_request_elements(request_type=self.PROTECTED_RESOURCE_REQUEST_TYPE,
                                                         credentials=self.credentials,
@@ -798,7 +796,7 @@ class AuthorizationProvider(BaseProvider):
                               content_parser=content_parser)
 
         loglevel = logging.INFO if response.status == 200 else logging.ERROR
-        self._log(loglevel, u'Got response for access(). HTTP status = {0}.'.format(response.status))
+        self._log(loglevel, 'Got response for access(). HTTP status = {0}.'.format(response.status))
         return response
 
 

@@ -55,14 +55,12 @@ import abc
 from authomatic.core import Response
 
 
-class BaseAdapter(object):
+class BaseAdapter(object, metaclass=abc.ABCMeta):
     """
     Base class for platform adapters
 
     Defines common interface for WSGI framework specific functionality.
     """
-
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractproperty
     def params(self):

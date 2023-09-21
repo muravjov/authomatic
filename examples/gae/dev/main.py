@@ -78,7 +78,7 @@ class Login(webapp2.RequestHandler):
             self.response.write('<br /><br />')
             
             self.response.write('message: {0}<br />'.format(event.error.message))
-            for k, v in event.error.__dict__.iteritems():
+            for k, v in event.error.__dict__.items():
                 if not k == 'message':
                     self.response.write('{0}: {1}<br />'.format(k, v))
         
@@ -92,7 +92,7 @@ class Login(webapp2.RequestHandler):
                 self.response.write('<br /><br />')
                 self.response.write('Credentials:<br /><br />')
                 
-                for k, v in event.user.credentials.__dict__.items():
+                for k, v in list(event.user.credentials.__dict__.items()):
                     self.response.write('{0}: {1}<br />'.format(k, v))
                 
                 serialized = event.user.credentials.serialize()
@@ -104,7 +104,7 @@ class Login(webapp2.RequestHandler):
                 self.response.write('Serialized size:<br />{0} B<br /><br />'.format(sys.getsizeof(serialized)))
                 
                 # deserialized credentials
-                for k, v in deserialized.__dict__.items():
+                for k, v in list(deserialized.__dict__.items()):
                     self.response.write('{0}: {1}<br />'.format(k, v))
                 
                 self.response.write('<br /><br />')
@@ -113,11 +113,11 @@ class Login(webapp2.RequestHandler):
                 
                 event.user.update()
                 
-            for k, v in event.user.__dict__.iteritems():
+            for k, v in event.user.__dict__.items():
                 if k != 'data':
                     self.response.write('{0}: {1}<br />'.format(k, v))
                     if k == 'gae_user' and v:
-                        for kk, vv in v.__dict__.iteritems():
+                        for kk, vv in v.__dict__.items():
                             self.response.write('&nbsp;&nbsp;&nbsp;{0}: {1}<br />'.format(kk, vv))
                     
             

@@ -114,8 +114,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Authomatic'
-copyright = u'2013, Peter Hudec'
+project = 'Authomatic'
+copyright = '2013, Peter Hudec'
 
 # TODO: Put version in one place.
 
@@ -178,7 +178,7 @@ html_theme = 'foundation'
 # further.  For a list of options available for each theme, see the
 # documentation.
 
-MOTTO = u"""
+MOTTO = """
 <span>Authomatic</span><br />
 is a <em>framework agnostic</em> library<br />
 for <em>Python</em> web applications<br />
@@ -308,8 +308,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Authomatic.tex', u'Authomatic Documentation',
-   u'Peter Hudec', 'manual'),
+  ('index', 'Authomatic.tex', 'Authomatic Documentation',
+   'Peter Hudec', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -338,8 +338,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'authomatic', u'Authomatic Documentation',
-     [u'Peter Hudec'], 1)
+    ('index', 'authomatic', 'Authomatic Documentation',
+     ['Peter Hudec'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -352,8 +352,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Authomatic', u'Authomatic Documentation',
-   u'Peter Hudec', 'Authomatic', 'One line description of project.',
+  ('index', 'Authomatic', 'Authomatic Documentation',
+   'Peter Hudec', 'Authomatic', 'One line description of project.',
    'Miscellaneous'),
 ]
 

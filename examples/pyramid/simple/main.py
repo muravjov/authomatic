@@ -30,7 +30,7 @@ def login(request):
         
         if result.error:
             # Login procedure finished with an error.
-            response.write(u'<h2>Damn that error: {0}</h2>'.format(result.error.message))
+            response.write('<h2>Damn that error: {0}</h2>'.format(result.error.message))
         
         elif result.user:
             # Hooray, we have the user!
@@ -41,9 +41,9 @@ def login(request):
                 result.user.update()
             
             # Welcome the user.
-            response.write(u'<h1>Hi {0}</h1>'.format(result.user.name))
-            response.write(u'<h2>Your id is: {0}</h2>'.format(result.user.id))
-            response.write(u'<h2>Your email is: {0}</h2>'.format(result.user.email))
+            response.write('<h1>Hi {0}</h1>'.format(result.user.name))
+            response.write('<h2>Your id is: {0}</h2>'.format(result.user.id))
+            response.write('<h2>Your email is: {0}</h2>'.format(result.user.email))
             
             # Seems like we're done, but there's more we can do...
             
@@ -68,7 +68,7 @@ def login(request):
                         error = access_response.data.get('error')
                         
                         if error:
-                            response.write(u'Damn that error: {0}!'.format(error))
+                            response.write('Damn that error: {0}!'.format(error))
                         elif statuses:
                             response.write('Your 5 most recent statuses:<br />')
                             for message in statuses:
@@ -76,11 +76,11 @@ def login(request):
                                 text = message.get('message')
                                 date = message.get('created_time')
                                 
-                                response.write(u'<h3>{0}</h3>'.format(text))
-                                response.write(u'Posted on: {0}'.format(date))
+                                response.write('<h3>{0}</h3>'.format(text))
+                                response.write('Posted on: {0}'.format(date))
                     else:
                         response.write('Damn that unknown error!<br />')
-                        response.write(u'Status: {0}'.format(response.status))
+                        response.write('Status: {0}'.format(response.status))
                     
                 if result.provider.name == 'tw':
                     response.write('Your are logged in with Twitter.<br />')
@@ -100,15 +100,15 @@ def login(request):
                                 text = tweet.get('text')
                                 date = tweet.get('created_at')
                                 
-                                response.write(u'<h3>{0}</h3>'.format(text.replace(u'\u2026', '...')))
-                                response.write(u'Tweeted on: {0}'.format(date))
+                                response.write('<h3>{0}</h3>'.format(text.replace('\u2026', '...')))
+                                response.write('Tweeted on: {0}'.format(date))
                                 
                         elif access_response.data.get('errors'):
-                            response.write(u'Damn that error: {0}!'.\
+                            response.write('Damn that error: {0}!'.\
                                                 format(response.data.get('errors')))
                     else:
                         response.write('Damn that unknown error!<br />')
-                        response.write(u'Status: {0}'.format(response.status))
+                        response.write('Status: {0}'.format(response.status))
     
     # It won't work if you don't return the response
     return response

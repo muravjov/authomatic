@@ -22,7 +22,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from authomatic.six.moves.urllib import parse
 from tests.functional_tests import fixtures
-import constants
+from . import constants
 from tests.functional_tests import config
 
 
@@ -34,7 +34,7 @@ LOG_PATH = os.path.join(ME, 'login-py{0}{1}.log'.format(sys.version_info[0],
                                                         sys.version_info[1]))
 PROJECT_DIR = os.path.abspath(os.path.join(ME, '../..'))
 EXAMPLES_DIR = os.path.join(PROJECT_DIR, 'examples')
-PROVIDERS = sorted([(k, v) for k, v in fixtures.ASSEMBLED_CONFIG.items()
+PROVIDERS = sorted([(k, v) for k, v in list(fixtures.ASSEMBLED_CONFIG.items())
                     if k in config.INCLUDE_PROVIDERS])
 PROVIDERS_IDS = [k for k, v in PROVIDERS]
 PROVIDER_NAME_WIDTH = len(max(PROVIDERS_IDS, key=lambda x: len(x)))
@@ -63,7 +63,7 @@ ALL_APPS = {
     ),
 }
 
-APPS = dict((k, v) for k, v in ALL_APPS.items() if
+APPS = dict((k, v) for k, v in list(ALL_APPS.items()) if
             k.lower() in config.INCLUDE_FRAMEWORKS)
 
 
@@ -82,11 +82,11 @@ def teardown_module():
 
 def log(indent, provider_name, message):
     tab_width = 4
-    logger.info(u'({venv}) {provider: <{padding}}{indent}{message}'.format(
+    logger.info('({venv}) {provider: <{padding}}{indent}{message}'.format(
         venv=VIRTUALENV_NAME,
         provider=provider_name,
         padding=PROVIDER_NAME_WIDTH + 3,
-        indent=u' ' * tab_width * indent,
+        indent=' ' * tab_width * indent,
         message=message
     ))
 
@@ -133,7 +133,7 @@ def login(request, browser, app, attempt=1):
             seconds = config.MIN_WAIT
 
         if seconds:
-            log(indent, provider_name, u'(waiting {0} seconds)'.format(seconds))
+            log(indent, provider_name, '(waiting {0} seconds)'.format(seconds))
             # log(0, provider_name, u' waiting {0} seconds '
             #     .format(seconds).center(60, '#'))
             time.sleep(seconds)
@@ -346,10 +346,10 @@ class TestCredentials(Base):
                 assert value
             else:
                 try:
-                    unicode
+                    str
                 except NameError:
-                    class unicode(object): pass
-                if coerce is not None and isinstance(expected, (str, unicode)):
+                    class str(object): pass
+                if coerce is not None and isinstance(expected, str):
                     expected = coerce(expected)
                     value = coerce(value)
 
@@ -560,6 +560,6 @@ class TestUser(Base):
         self.skip_if_openid(provider)
         sua = provider['class_'].supported_user_attributes
         tested = dict((k, getattr(sua, k)) for k in sua._fields)
-        expected = dict((k, bool(v)) for k, v in provider['user'].items() if
+        expected = dict((k, bool(v)) for k, v in list(provider['user'].items()) if
                         k is not 'content')
         assert tested == expected

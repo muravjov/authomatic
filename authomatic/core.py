@@ -9,7 +9,7 @@ import hmac
 import json
 import logging
 try:
-    import cPickle as pickle
+    import pickle as pickle
 except ImportError:
     import pickle
 import sys
@@ -1083,7 +1083,7 @@ class Response(ReprMixin):
         """
 
         textchars = (bytearray([7, 8, 9, 10, 12, 13, 27]) +
-                     bytearray(range(0x20, 0x100)))
+                     bytearray(list(range(0x20, 0x100))))
         return bool(content.translate(None, textchars))
 
 

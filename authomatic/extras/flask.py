@@ -8,7 +8,7 @@ Utilities you can use when using this library with the |flask|_ framework.
 Thanks to `Mark Steve Samson <http://marksteve.com>`_.
 """
 
-from __future__ import absolute_import
+
 
 from functools import wraps
 

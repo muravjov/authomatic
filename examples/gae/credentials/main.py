@@ -1,6 +1,6 @@
 # main.py
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 import webapp2
 from authomatic import Authomatic
@@ -24,7 +24,7 @@ class Login(webapp2.RequestHandler):
                 
                 # Save the user name and ID to cookies that we can use it in other handlers.
                 self.response.set_cookie('user_id', result.user.id)
-                self.response.set_cookie('user_name', urllib.quote(result.user.name))
+                self.response.set_cookie('user_name', urllib.parse.quote(result.user.name))
                 
                 if result.user.credentials:
                     # Serialize credentials and store it as well.
@@ -32,7 +32,7 @@ class Login(webapp2.RequestHandler):
                     self.response.set_cookie('credentials', serialized_credentials)
                     
             elif result.error:
-                self.response.set_cookie('error', urllib.quote(result.error.message))
+                self.response.set_cookie('error', urllib.parse.quote(result.error.message))
             
             self.redirect('/')
 
@@ -46,8 +46,8 @@ class Home(webapp2.RequestHandler):
         # Retrieve values from cookies.
         serialized_credentials = self.request.cookies.get('credentials')
         user_id = self.request.cookies.get('user_id')
-        user_name = urllib.unquote(self.request.cookies.get('user_name', ''))
-        error = urllib.unquote(self.request.cookies.get('error', ''))
+        user_name = urllib.parse.unquote(self.request.cookies.get('user_name', ''))
+        error = urllib.parse.unquote(self.request.cookies.get('error', ''))
         
         if error:
             self.response.write('<p>Damn that error: {0}</p>'.format(error))
