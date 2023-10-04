@@ -382,7 +382,7 @@ class BaseProvider(object, metaclass=abc.ABCMeta):
         self._log(logging.DEBUG, ' \u251C\u2500 params: {0}'.format(params))
         self._log(logging.DEBUG, ' \u2514\u2500 headers: {0}'.format(headers))
 
-        http_proxy = os.environ.get("HTTP_PROXY")
+        http_proxy = os.environ.get("AUTHOMATIC_HTTP_PROXY")
         if http_proxy:
             def do_request():
                 import requests
