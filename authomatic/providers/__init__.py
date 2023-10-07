@@ -383,7 +383,19 @@ class BaseProvider(object, metaclass=abc.ABCMeta):
         self._log(logging.DEBUG, ' \u2514\u2500 headers: {0}'.format(headers))
 
         http_proxy = os.environ.get("AUTHOMATIC_HTTP_PROXY")
-        if http_proxy:
+        http_proxy_filter = os.environ.get("AUTHOMATIC_HTTP_PROXY_FILTER")
+
+        def use_http_proxy():
+            if not http_proxy:
+                return False
+
+            if not http_proxy_filter:
+                return True
+
+            # should be comma separated string like "facebook,linkedin"
+            return self.name in http_proxy_filter.split(",")
+
+        if use_http_proxy():
             def do_request():
                 import requests
                 from authomatic.six.moves import urllib_parse as parse
