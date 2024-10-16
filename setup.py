@@ -1,6 +1,5 @@
 from setuptools import setup,find_packages
 
-from authomatic import six
 
 
 setup(
@@ -17,7 +16,7 @@ setup(
     url='http://peterhudec.github.io/authomatic',
     license = 'MIT',
     extras_require={
-        'OpenID': ['python3-openid' if six.PY3 else 'python-openid'],
+        'OpenID': ['python3-openid'],
     },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
